@@ -42,7 +42,7 @@ contract('FixedSupplyToken', async (accounts) => {
     const transferObject = await instance.transfer(bob_account, amount);
     const ownerBalance = await instance.balanceOf.call(owner_account);
     const bobBalance = await instance.balanceOf.call(bob_account);
-    assert.equal(Number(ownerBalance), totalSupply - amount, 'recipient balance is wront');
+    assert.equal(Number(ownerBalance), totalSupply - amount, 'recipient balance is wrong');
     assert.equal(Number(bobBalance), amount, 'recipient balance is wrong');
     
     // event Transfer(address indexed from, address indexed to, uint tokens);
