@@ -14,5 +14,5 @@ module.exports = {
       gas: 4712388,          // Set to Ropsten limit
       gasPrice: 20e9,        // 20 gwei
     },
-  };
+  },
 };
