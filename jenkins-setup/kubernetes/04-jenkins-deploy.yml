@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins-deploy
+  namespace: jenkins
+  labels:
+    run: jenkins-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: jenkins-deploy
+  template:
+    metadata:
+      name: jenkins-deploy
+      labels:
+        run: jenkins-deploy
+    spec:
+      containers:
+        - name: jenkins
+          image: "carlol/jenkins-eth:v1"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+              name: ui-port
+            - containerPort: 50000
+              protocol: TCP
+              name: jira-port
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 60
+          volumeMounts:
+            - name: jenkins-data
+              mountPath: /var
+      # imagePullSecrets:
+      #   - name: docker-credentials
+      volumes:
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins-data
+# kubectl delete deployment jenkins-deploy --namespace jenkins

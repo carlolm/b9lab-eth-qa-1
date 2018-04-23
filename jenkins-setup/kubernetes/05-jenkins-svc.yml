@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-svc
+  namespace: jenkins
+  labels:
+    run: jenkins-deploy
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    name: ui-port
+    targetPort: 8080
+  - port: 50000
+    protocol: TCP
+    name: jira-port
+    targetPort: 50000
+  type: LoadBalancer
+  selector:
+    run: jenkins-deploy
+# $ kubectl delete svc jenkins-svc --namespace jenkins
